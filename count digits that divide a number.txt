@@ -1,0 +1,16 @@
+class Solution {
+    public int countDigits(int num) {
+        int count = 0;
+        int temp = num;  // Keep a copy of num to extract digits
+        
+        while (temp > 0) {
+            int digit = temp % 10;  // Extract last digit
+            if (digit != 0 && num % digit == 0) {
+                count++;  // Digit divides num
+            }
+            temp /= 10;  // Remove last digit
+        }
+        
+        return count;
+    }
+}
