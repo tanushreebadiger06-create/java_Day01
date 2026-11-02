@@ -1,0 +1,78 @@
+int** findDifference(int* nums1, int nums1Size,
+                     int* nums2, int nums2Size,
+                     int* returnSize, int** returnColumnSizes) {
+
+    int** answer = malloc(2 * sizeof(int*));
+    *returnSize = 2;
+
+    int* a = malloc(nums1Size * sizeof(int));
+    int* b = malloc(nums2Size * sizeof(int));
+
+    int size1 = 0;
+    int size2 = 0;
+
+    // Find elements in nums1 but not in nums2
+    for (int i = 0; i < nums1Size; i++) {
+        int found = 0;
+
+        // Check duplicate
+        for (int j = 0; j < size1; j++) {
+            if (a[j] == nums1[i]) {
+                found = 1;
+                break;
+            }
+        }
+
+        if (found)
+            continue;
+
+        // Check if present in nums2
+        for (int j = 0; j < nums2Size; j++) {
+            if (nums1[i] == nums2[j]) {
+                found = 1;
+                break;
+            }
+        }
+
+        if (!found) {
+            a[size1++] = nums1[i];
+        }
+    }
+
+    // Find elements in nums2 but not in nums1
+    for (int i = 0; i < nums2Size; i++) {
+        int found = 0;
+
+        // Check duplicate
+        for (int j = 0; j < size2; j++) {
+            if (b[j] == nums2[i]) {
+                found = 1;
+                break;
+            }
+        }
+
+        if (found)
+            continue;
+
+        // Check if present in nums1
+        for (int j = 0; j < nums1Size; j++) {
+            if (nums2[i] == nums1[j]) {
+                found = 1;
+                break;
+            }
+        }
+
+        if (!found) {
+            b[size2++] = nums2[i];
+        }
+    }
+
+    answer[0] = a;
+    answer[1] = b;
+
+    *returnColumnSizes = malloc(2 * sizeof(int));
+    (*returnColumnSizes)[0] = size1;
+    (*returnColumnSizes)[1] = size2;
+
+    return answer;
+}
